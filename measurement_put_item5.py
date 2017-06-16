@@ -4,6 +4,10 @@ import json
 import decimal
 from datetime import datetime
 
+'''
+this is a copy with hard coded variables to work on float to number inputs.
+'''
+
 # Helper class to convert a DynamoDB item to JSON.
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):
