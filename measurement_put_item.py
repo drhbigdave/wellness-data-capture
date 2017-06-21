@@ -48,13 +48,13 @@ response = table.put_item(
    Item={
         'realm': realm,
         'timestamp': timestamp,
-        'fat': fat,
-        'hydration': hydration,
+        'fat': decimal.Decimal(fat),
+        'hydration': decimal.Decimal(hydration),
         'notes': notes,
-        'waist': waist,
-        'weight': weight,
-        'right-grip': rtgrip,
-        'left-grip': ltgrip
+        'waist': decimal.Decimal(waist),
+        'weight': decimal.Decimal(weight),
+        'right-grip': decimal.Decimal(rtgrip),
+        'left-grip': decimal.Decimal(ltgrip)
         }
 )
 
