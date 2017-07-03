@@ -33,7 +33,7 @@ aspirin = 81
 betaAlanine = 2250
 fishoilDha = 1460
 fishoilEpa = 660
-hmb = 1000
+hmb = 500
 panthothenicAcid = 500
 pqq = 10
 rezV = 400
@@ -41,9 +41,11 @@ tyrosine = 500
 ubiquinol = 100
 vitex = 450
 tribulus = 2250
-vitamind = 400
-creatine = 5000
-rhodiolaRosea = 500
+tongkatAli = 40
+greenTeaExtractECGC = 400
+greenTeaExtractCatechins = 640
+
+
 
 response = table.put_item(
    Item={
@@ -62,9 +64,9 @@ response = table.put_item(
         'acetyl-carnitine': acetylCarnitine,
         'vitex': vitex,
         'tribulus': tribulus,
-        'creatine': creatine,
-        'vitaminD': vitamind,
-        'rhodiola-rosea': rhodiolaRosea
+        'greenTeaECGC': greenTeaExtractECGC,
+        'greenTeaCatequins': greenTeaExtractCatechins,
+        'tongkatAli': tongkatAli
         }
 )
 

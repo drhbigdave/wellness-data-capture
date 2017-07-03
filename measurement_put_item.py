@@ -27,8 +27,21 @@ else:
     timestamp = str(input('provide the time for the data\
      input - \'year-month-day hour:min:sec\' example: \'2017-05-27 13:06:01:    '))
 
-realm = input('Will you be capturing - measurements - \
-    supplements - pain - or 5:2fast?  ')
+#choose the realm for the put
+chooseRealm = input('Will you be capturing - measurements - \
+    supplements - pain - or 5:2fast? provide "m" , "s" "p" or "f" or leave \
+    this blank to create a new realm:   ')
+if chooseRealm is 'm':
+    realm = 'measurements'
+elif chooseRealm is 's':
+    realm = 'supplements'
+elif chooseRealm is 'p':
+    realm = 'pain'
+else:
+    realm = str(input('if you want to create a new realm type it here\
+    in lowercase letters:   '))
+
+
 fat = input('what fat % did the tanita scale indicate\
  (taken to 1 decimal place)? ')
 hydration = input('what hydration value did the tanita scale \
