@@ -28,62 +28,19 @@ else:
      \'year-month-day hour:min:sec\' example: \'2017-05-27 13:06:01:    '))
 
 realm = 'supplements'
-acetylCarnitine = 500
-aspirin = 81
-betaAlanine = 2250
-fishoilDha = 3468
-fishoilEpa = 660
-hmb = 1500
-panthothenicAcid = 500
-pqq = 10
-rezV = 400
-ubiquinol = 100
-greenTeaExtractECGC = 200
-greenTeaExtractCatechins = 320
-koreanGinseng = 600
-tribulus = 2250
-bcaa = 1650
-tyrosine = 500
-eliteprominerals = 3
-creatine = 5000
-garlic = 1000
-vitaminD = 400
-msm = 2000
+adhoc_name_input = input('supply the name of the new supplement here..  ')
+adhoc_ammount_input = int(input('supply the amount here..  '))
 
 '''
 area for unused variables until i find a better way:
         'beta-alanine': betaAlanine,
-        'greenTeaECGC': greenTeaExtractECGC,
-        'greenTeaCatequins': greenTeaExtractCatechins,
-        'tribulus': tribulus,
-        'bcaa': bcaa,
-        'korean-ginseng': koreanGinseng,
-        'pqq': pqq,
-        'ubiquinol': ubiquinol,
-        'tyrosine': tyrosine,
-        'acetyl-carnitine': acetylCarnitine,
-        'vitaminD' : vitaminD
-                'rez-v': rezV,
-                'hmb': hmb,
-                'msm': msm,    
 '''
 
 response = table.put_item(
    Item={
         'realm': realm,
         'timestamp': timestamp,
-        'aspirin': aspirin,
-        'fishoil(dha)': fishoilDha,
-        'fishoil(epa)': fishoilEpa,
-        'panthothenic-acid': panthothenicAcid,
-        'beta-alanine': betaAlanine,
-        'eliteprominerals': eliteprominerals,
-        'creatine' : creatine,
-        'garlic' : garlic,
-        'pqq': pqq,
-        'ubiquinol': ubiquinol,
-        'vitaminD': vitaminD,
-        'msm' : msm
+        adhoc_name_input: adhoc_ammount_input
         }
 )
 

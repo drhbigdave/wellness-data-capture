@@ -38,24 +38,9 @@ required_hash_data = {
 
 #capture key value data and put in dict, flow tbd
 measurement_capture = {}
-fat_input = (input('what fat % did the tanita scale indicate\
- (taken to 1 decimal place)? '))
-measurement_capture['fat'] = decimal.Decimal(fat_input)
-
-hydration_input = (input('what hydration value did the tanita scale \
-    indicate (taken to 1 decimal place)? '))
-measurement_capture['hydration'] = decimal.Decimal(hydration_input)
 
 notes_input = input('are there any notes you\'d like to capture? ')
 measurement_capture['notes'] = notes_input
-
-waist_input = input('in inches, what was your waist measurement \
-    (taken to 1 decimal place)? ')
-measurement_capture['waist'] = decimal.Decimal(waist_input)
-
-weight_input = input('in lbs, what weight did the tanita scale \
-    indicate (taken to 1 decimal place)? ')
-measurement_capture['weight'] = decimal.Decimal(weight_input)
 
 rtgrip_input = input('in lbs, what was your right grip strength \
     measurment (taken to 1 decimal place)? ')
@@ -64,22 +49,6 @@ measurement_capture['right-grip'] = decimal.Decimal(rtgrip_input)
 ltgrip_input = input('in lbs, what was your left grip strength \
     measurment (taken to 1 decimal place)? ')
 measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input)
-
-ltcalf_input = input('in inches measure the left calf at its largest \
-    point, to 1 decimal place   ')
-measurement_capture['left-calf'] = decimal.Decimal(ltcalf_input)
-
-rtcalf_input = input('in inches measure the right calf at its \
-    largest point   ')
-measurement_capture['right-calf'] = decimal.Decimal(rtcalf_input)
-
-ltleg_input = input('in inches measure the left leg at its largest \
-    point   ')
-measurement_capture['left-leg'] = decimal.Decimal(ltleg_input)
-
-rtleg_input = input('in inches measure the right leg at its \
-    largest point   ')
-measurement_capture['right-leg'] = decimal.Decimal(ltleg_input)
 
 #combine dicts
 final_input_data = measurement_capture.copy()
