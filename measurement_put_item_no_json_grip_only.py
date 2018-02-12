@@ -39,9 +39,6 @@ required_hash_data = {
 #capture key value data and put in dict, flow tbd
 measurement_capture = {}
 
-notes_input = input('are there any notes you\'d like to capture? ')
-measurement_capture['notes'] = notes_input
-
 rtgrip_input = input('in lbs, what was your right grip strength \
     measurment (taken to 1 decimal place)? ')
 measurement_capture['right-grip'] = decimal.Decimal(rtgrip_input)
@@ -49,6 +46,13 @@ measurement_capture['right-grip'] = decimal.Decimal(rtgrip_input)
 ltgrip_input = input('in lbs, what was your left grip strength \
     measurment (taken to 1 decimal place)? ')
 measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input)
+
+temperature_input = input('in Farenheit, what is your body temperature \
+    measurment (taken to 1 decimal place)? ')
+measurement_capture['temperature'] = decimal.Decimal(temperature_input)
+
+notes_input = input('are there any notes you\'d like to capture? ')
+measurement_capture['notes'] = notes_input
 
 #combine dicts
 final_input_data = measurement_capture.copy()

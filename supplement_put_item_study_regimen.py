@@ -28,36 +28,14 @@ else:
      \'year-month-day hour:min:sec\' example: \'2017-05-27 13:06:01:    '))
 
 realm = 'supplements'
-acetylCarnitine = 500
-aspirin = 81
-betaAlanine = 2250
+panthothenicAcid = 500
+vitaminD = 1600
+huperzineA = 100
+alphagpc = 600
+tongkatali = 40
 fishoilDha = 3468
 fishoilEpa = 660
-hmb = 1000
-panthothenicAcid = 500
-pqq = 10
-rezV = 200
-ubiquinol = 100
-greenTeaExtractECGC = 200
-greenTeaExtractCatechins = 320
-koreanGinseng = 600
-tribulus = 1500
-bcaa = 1650
-tyrosine = 500
-eliteprominerals = 3
-creatine = 5000
 garlic = 1500
-vitaminD = 2000
-msm = 2000
-potassium = 200
-huperzineA = 100
-theanine = 100
-vitaminE = 400
-Bcomplex = 1400
-tongkatali = 80
-niacin = 200
-curcumin = 500
-
 '''
 area for unused variables until i find a better way:
         'potassium': potassium,
@@ -84,29 +62,15 @@ area for unused variables until i find a better way:
         'beta-alanine': betaAlanine,    
         'pqq': pqq,
         'ubiquinol': ubiquinol,
-        'curcumin': curcumin,
-        'tongkat-ali': tongkatali,
-        'fishoil(dha)': fishoilDha,
-        'fishoil(epa)': fishoilEpa,
 '''
 
 response = table.put_item(
    Item={
         'realm': realm,
         'timestamp': timestamp,
-        'vitaminD' : vitaminD,
-        'garlic' : garlic,
-        'msm': msm,   
-        'creatine' : creatine,
-        'aspirin': aspirin,
-        'beta-alanine': betaAlanine,    
-        'pqq': pqq,
-        'ubiquinol': ubiquinol,
-        'panthothenic-acid': panthothenicAcid,
-        'niacin': niacin,
-        'acetyl-carnitine': acetylCarnitine,
-        'curcumin': curcumin,
-        'tyrosine': tyrosine
+        'fishoil(dha)': fishoilDha,
+        'fishoil(epa)': fishoilEpa,
+        'garlic' : garlic
         }
 )
 
