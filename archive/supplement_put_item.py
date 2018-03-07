@@ -31,9 +31,9 @@ realm = 'supplements'
 acetylCarnitine = 500
 aspirin = 81
 betaAlanine = 2250
-fishoilDha = 3468
-fishoilEpa = 660
-hmb = 1000
+fishoilDha = 1100
+fishoilEpa = 220
+hmb = 3000
 panthothenicAcid = 500
 pqq = 10
 rezV = 200
@@ -47,7 +47,7 @@ tyrosine = 500
 eliteprominerals = 3
 creatine = 5000
 garlic = 1500
-vitaminD = 2000
+vitaminD = 1600
 msm = 2000
 potassium = 200
 huperzineA = 100
@@ -55,8 +55,9 @@ theanine = 100
 vitaminE = 400
 Bcomplex = 1400
 tongkatali = 80
-niacin = 200
+niacin = 100
 curcumin = 500
+liver = 4500
 
 '''
 area for unused variables until i find a better way:
@@ -88,6 +89,8 @@ area for unused variables until i find a better way:
         'tongkat-ali': tongkatali,
         'fishoil(dha)': fishoilDha,
         'fishoil(epa)': fishoilEpa,
+                'garlic' : garlic,
+                        'curcumin': curcumin,
 '''
 
 response = table.put_item(
@@ -95,7 +98,6 @@ response = table.put_item(
         'realm': realm,
         'timestamp': timestamp,
         'vitaminD' : vitaminD,
-        'garlic' : garlic,
         'msm': msm,   
         'creatine' : creatine,
         'aspirin': aspirin,
@@ -104,9 +106,12 @@ response = table.put_item(
         'ubiquinol': ubiquinol,
         'panthothenic-acid': panthothenicAcid,
         'niacin': niacin,
+        'tyrosine': tyrosine,
         'acetyl-carnitine': acetylCarnitine,
-        'curcumin': curcumin,
-        'tyrosine': tyrosine
+        'fishoil(dha)': fishoilDha,
+        'fishoil(epa)': fishoilEpa,
+        'liver': liver,
+        'curcumin': curcumin
         }
 )
 
