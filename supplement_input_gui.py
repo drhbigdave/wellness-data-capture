@@ -15,17 +15,10 @@ from datetime import datetime
 
 #################
 #Dynamodb connection:
-session = boto3.setup_default_session(profile_name='drhdynamo')
+session = boto3.setup_default_session(profile_name='dynamo')
 dynamodb = boto3.resource('dynamodb',region_name='us-east-1')
 
 table = dynamodb.Table('wellness')
-
-realm = 'supplements'
-timestamp = str(datetime.today())
-required_hash_data = {
-    'realm': realm,
-    'timestamp': timestamp
-}
 
 #################
 # FUNCTIONS
@@ -37,8 +30,161 @@ def _quit():
 	win.quit()
 	win.destroy()
 	exit()
+    
+    
+#################
+# Procedural Code
+#################
 
-#begin submit work
+# instantiate
+win = tk.Tk()
+
+# title
+win.title('wellness input')
+
+#tab control / notebook intro here
+
+tabControl = ttk.Notebook(win)  	#create tab control
+
+tab1=ttk.Frame(tabControl)			#create a tab
+tabControl.add(tab1, text='Supplements')	#add the tab
+
+tab2 = ttk.Frame(tabControl)		#create 2nd tab control
+tabControl.add(tab2, text='Measurements')	#add the tab
+
+tabControl.pack(expand=1, fill='both')	#make visible
+
+#----------------------------------------------------
+#we are creating a container to hold all the widgets
+supp_frame = ttk.LabelFrame(tab1, text='Supplement Input')
+meas_frame = ttk.LabelFrame(tab2, text='Measurements Input')
+
+# using the tkinter grid layout method
+supp_frame.grid(column=1, row=0, padx=8, pady=4)
+meas_frame.grid(column=1, row=0, padx=8, pady=4)
+
+#################
+# measurements
+#################
+
+# functions
+measurement_capture = {}
+
+def submit_meas_data_current():
+    measurement_capture['fat'] = decimal.Decimal(fat_input.get())
+    measurement_capture['weight'] = decimal.Decimal(weight_input.get())
+    measurement_capture['hydration'] = decimal.Decimal(hydration_input.get())
+    measurement_capture['waist'] = decimal.Decimal(waist_input.get())
+    measurement_capture['left-calf'] = decimal.Decimal(ltcalf_input.get())
+    measurement_capture['right-calf'] = decimal.Decimal(rtcalf_input.get())
+    measurement_capture['left-leg'] = decimal.Decimal(ltleg_input.get())
+    measurement_capture['right-leg'] = decimal.Decimal(rtleg_input.get())
+    measurement_capture['right-grip'] = decimal.Decimal(rtgrip_input.get())
+    measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input.get())
+    for key in list(measurement_capture.keys()):  ## creates a list of all keys
+        if measurement_capture[key] == 0.0:
+            del measurement_capture[key]
+            
+    realm = 'measurements'
+    timestamp = str(datetime.today())
+    required_hash_data = {
+        'realm': realm,
+        'timestamp': timestamp
+    }
+#    #combine dicts
+    final_input_data = measurement_capture.copy()
+    final_input_data.update(required_hash_data)
+    print(final_input_data)
+#    #write to wellness table
+    with table.batch_writer() as batch:
+        batch.put_item(final_input_data)
+
+    print("PutItem succeeded:")
+
+def submit_meas_data_historical():
+    measurement_capture['fat'] = decimal.Decimal(fat_input.get())
+    measurement_capture['weight'] = decimal.Decimal(weight_input.get())
+    measurement_capture['hydration'] = decimal.Decimal(hydration_input.get())
+    measurement_capture['waist'] = decimal.Decimal(waist_input.get())
+    measurement_capture['left-calf'] = decimal.Decimal(ltcalf_input.get())
+    measurement_capture['right-calf'] = decimal.Decimal(rtcalf_input.get())
+    measurement_capture['left-leg'] = decimal.Decimal(ltleg_input.get())
+    measurement_capture['right-leg'] = decimal.Decimal(rtleg_input.get())
+    measurement_capture['right-grip'] = decimal.Decimal(rtgrip_input.get())
+    measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input.get())
+    for key in list(measurement_capture.keys()):  ## creates a list of all keys
+        if measurement_capture[key] == 0.0:
+            del measurement_capture[key]
+            
+    realm = 'measurements'
+    timestamp = hist_meas_input.get()
+    required_hash_data = {
+        'realm': realm,
+        'timestamp': timestamp
+    }
+#    #combine dicts 	
+    final_input_data = measurement_capture.copy()
+    final_input_data.update(required_hash_data)
+
+#    #write to wellness table
+    with table.batch_writer() as batch:
+        batch.put_item(final_input_data)
+
+    print("PutItem succeeded:")
+
+#add the submit and cancel buttons
+tk.Button(meas_frame, text='Submit Current', command=submit_meas_data_current, pady=4, padx=7, relief='raised',bd=4).grid(row=1, column=0)
+tk.Button(meas_frame, text='Submit Historical', command=submit_meas_data_historical, pady=5, padx=7, relief='raised',bd=4).grid(row=1, column=1)
+hist_meas_input = tk.StringVar(value='2017-05-07 08:00:00')
+tk.Entry(meas_frame, text='what', textvariable=hist_meas_input).grid(row=1, column=2, columnspan=2)
+tk.Button(meas_frame, text='Quit', command=_quit, pady=4, padx=7, relief='sunken').grid(row=1,column=6)
+
+#inputs
+ttk.Label(meas_frame, text='Right Grip').grid(row=2, column=0, sticky = 'E')
+rtgrip_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=rtgrip_input).grid(row=2, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Left Grip').grid(row=3, column=0, sticky = 'E')
+ltgrip_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=ltgrip_input).grid(row=3, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Weight in lbs').grid(row=4, column=0, sticky = 'E')
+weight_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=weight_input).grid(row=4, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Fat %').grid(row=5, column=0, sticky = 'E')
+fat_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=fat_input).grid(row=5, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Hydration %').grid(row=6, column=0, sticky = 'E')
+hydration_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=hydration_input).grid(row=6, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Waist in Inches').grid(row=7, column=0, sticky = 'E')
+waist_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=waist_input).grid(row=7, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Left Calf in Inches').grid(row=8, column=0, sticky = 'E')
+ltcalf_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=ltcalf_input).grid(row=8, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Right Calf in Inches').grid(row=9, column=0, sticky = 'E')
+rtcalf_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=rtcalf_input).grid(row=9, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Left Leg in Inches').grid(row=10, column=0, sticky = 'E')
+ltleg_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=ltleg_input).grid(row=10, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Right Leg in Inches').grid(row=11, column=0, sticky = 'E')
+rtleg_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=rtleg_input).grid(row=11, column=1,sticky = tk.E+tk.W)
+
+
+
+#################
+# supplements
+#################
     
 data = {}
 def submit_data_current():
@@ -59,7 +205,6 @@ def submit_data_current():
     data['tyrosine'] = decimal.Decimal(tyrosine.get())
     data['aspirin'] = decimal.Decimal(aspirin.get()*81)
     data['creatine'] = decimal.Decimal(creatine.get()*700)
-    print(data)
     for key in list(data.keys()):  ## creates a list of all keys
         if data[key] == 0:
             del data[key]
@@ -101,7 +246,6 @@ def submit_data_historical():
     data['creatine'] = decimal.Decimal(creatine.get()*700)
     data['niacin'] = decimal.Decimal(niacin.get()*100)
     data['msm'] = decimal.Decimal(msm.get()*100)
-    print(data)
     for key in list(data.keys()):  ## creates a list of all keys
         if data[key] == 0:
             del data[key]
@@ -122,38 +266,6 @@ def submit_data_historical():
         batch.put_item(final_input_data)
 
     print("PutItem succeeded:")
-
-#################
-# Procedural Code
-#################
-
-# instantiate
-win = tk.Tk()
-
-# title
-win.title('wellness input')
-
-#tab control / notebook intro here
-
-tabControl = ttk.Notebook(win)  	#create tab control
-
-tab1=ttk.Frame(tabControl)			#create a tab
-tabControl.add(tab1, text='Supplements')	#add the tab
-
-tab2 = ttk.Frame(tabControl)		#create 2nd tab control
-tabControl.add(tab2, text='Measurements')	#add the tab
-
-tabControl.pack(expand=1, fill='both')	#make visible
-
-#----------------------------------------------------
-#we are creating a container to hold all the widgets
-supp_frame = ttk.LabelFrame(tab1, text='Supplement Input')
-
-# using the tkinter grid layout method
-supp_frame.grid(column=1, row=0, padx=8, pady=4)
-
-#----------------------------------------------------
-#the frame isn't visible until we add widgets to it
 
 # entry width wag
 ENTRY_WIDTH = 20

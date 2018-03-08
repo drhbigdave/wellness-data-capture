@@ -85,6 +85,7 @@ measurement_capture['right-leg'] = decimal.Decimal(ltleg_input)
 final_input_data = measurement_capture.copy()
 final_input_data.update(required_hash_data)
 
+
 #write to wellness table
 with table.batch_writer() as batch:
     batch.put_item(final_input_data)
