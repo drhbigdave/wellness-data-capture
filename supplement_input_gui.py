@@ -5,13 +5,14 @@ Created on Mon Mar  5 07:40:09 2018
 
 @author: davidhagan
 """
-
+#import encodings.idna
 import tkinter as tk
 import tkinter.ttk as ttk
-from tkinter import Menu
 import boto3
 import decimal
 from datetime import datetime
+import time
+
 
 #################
 #Dynamodb connection:
@@ -52,16 +53,68 @@ tabControl.add(tab1, text='Supplements')	#add the tab
 tab2 = ttk.Frame(tabControl)		#create 2nd tab control
 tabControl.add(tab2, text='Measurements')	#add the tab
 
+tab3 = ttk.Frame(tabControl)		#create 2nd tab control
+tabControl.add(tab3, text='Shake')	#add the tab
+
 tabControl.pack(expand=1, fill='both')	#make visible
 
 #----------------------------------------------------
 #we are creating a container to hold all the widgets
 supp_frame = ttk.LabelFrame(tab1, text='Supplement Input')
 meas_frame = ttk.LabelFrame(tab2, text='Measurements Input')
+shake_frame = ttk.LabelFrame(tab3, text='Shake Input')
 
 # using the tkinter grid layout method
 supp_frame.grid(column=1, row=0, padx=8, pady=4)
 meas_frame.grid(column=1, row=0, padx=8, pady=4)
+shake_frame.grid(column=1, row=0, padx=8, pady=4)
+
+#################
+# shake
+#################
+def submit_shake_data_current():
+    print('shakey shake')
+    
+def submit_shake_data_historical():
+    print('shakey shake')
+    
+#add the submit and cancel buttons
+tk.Button(shake_frame, text='Submit Current', command=submit_shake_data_current, pady=4, padx=7, relief='raised',bd=4).grid(row=1, column=0)
+tk.Button(shake_frame, text='Submit Historical', command=submit_shake_data_historical, pady=5, padx=7, relief='raised',bd=4).grid(row=1, column=1)
+hist_shake_input = tk.StringVar(value='2017-05-07 08:00:00')
+tk.Entry(shake_frame, text='what', textvariable=hist_shake_input).grid(row=1, column=2, columnspan=2)
+tk.Button(shake_frame, text='Quit', command=_quit, pady=4, padx=7, relief='sunken').grid(row=1,column=6)
+
+#inputs
+ttk.Label(shake_frame, text='Protein').grid(row=11, column=0, sticky = 'E')
+temp_input = tk.StringVar(value='0.0')
+tk.Entry(shake_frame, textvariable=temp_input).grid(row=11, column=1,sticky = tk.E+tk.W)
+
+#ttk.Label(meas_frame, text='Right Grip').grid(row=12, column=0, sticky = 'E')
+#rtgrip_input = tk.StringVar(value='0.0')
+#tk.Entry(meas_frame, textvariable=rtgrip_input).grid(row=12, column=1,sticky = tk.E+tk.W)
+#
+#ttk.Label(meas_frame, text='Left Grip').grid(row=13, column=0, sticky = 'E')
+#ltgrip_input = tk.StringVar(value='0.0')
+#tk.Entry(meas_frame, textvariable=ltgrip_input).grid(row=13, column=1,sticky = tk.E+tk.W)
+#
+#ttk.Label(meas_frame, text='Weight in lbs').grid(row=14, column=0, sticky = 'E')
+#weight_input = tk.StringVar(value='0.0')
+#tk.Entry(meas_frame, textvariable=weight_input).grid(row=14, column=1,sticky = tk.E+tk.W)
+#
+#ttk.Label(meas_frame, text='Fat %').grid(row=15, column=0, sticky = 'E')
+#fat_input = tk.StringVar(value='0.0')
+#tk.Entry(meas_frame, textvariable=fat_input).grid(row=15, column=1,sticky = tk.E+tk.W)
+#
+#ttk.Label(meas_frame, text='Hydration %').grid(row=16, column=0, sticky = 'E')
+#hydration_input = tk.StringVar(value='0.0')
+#tk.Entry(meas_frame, textvariable=hydration_input).grid(row=16, column=1,sticky = tk.E+tk.W)
+#
+#ttk.Label(meas_frame, text='Waist in Inches').grid(row=17, column=0, sticky = 'E')
+#waist_input = tk.StringVar(value='0.0')
+#tk.Entry(meas_frame, textvariable=waist_input).grid(row=17, column=1,sticky = tk.E+tk.W)
+
+
 
 #################
 # measurements
@@ -82,6 +135,10 @@ def submit_meas_data_current():
     measurement_capture['right-grip'] = decimal.Decimal(rtgrip_input.get())
     measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input.get())
     measurement_capture['temperature'] = decimal.Decimal(temp_input.get())
+    measurement_capture['depression'] = decimal.Decimal(dep_input.get())
+    measurement_capture['anxiety'] = decimal.Decimal(anx_input.get())
+    measurement_capture['obsessing'] = decimal.Decimal(obs_input.get())
+    measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input.get())
     for key in list(measurement_capture.keys()):  ## creates a list of all keys
         if measurement_capture[key] == 0.0:
             del measurement_capture[key]
@@ -99,8 +156,10 @@ def submit_meas_data_current():
 #    #write to wellness table
     with table.batch_writer() as batch:
         batch.put_item(final_input_data)
-
-    print("PutItem succeeded:")
+    #print result    
+    result = "PutItem succeeded"
+    tm1.insert(tk.END, result)
+    tm1.after(10000, lambda: tm1.delete(1.0, tk.END))
 
 def submit_meas_data_historical():
     measurement_capture['fat'] = decimal.Decimal(fat_input.get())
@@ -114,6 +173,10 @@ def submit_meas_data_historical():
     measurement_capture['right-grip'] = decimal.Decimal(rtgrip_input.get())
     measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input.get())
     measurement_capture['temperature'] = decimal.Decimal(temp_input.get())
+    measurement_capture['depression'] = decimal.Decimal(dep_input.get())
+    measurement_capture['anxiety'] = decimal.Decimal(anx_input.get())
+    measurement_capture['obsessing'] = decimal.Decimal(obs_input.get())
+    measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input.get())
     for key in list(measurement_capture.keys()):  ## creates a list of all keys
         if measurement_capture[key] == 0.0:
             del measurement_capture[key]
@@ -131,67 +194,95 @@ def submit_meas_data_historical():
 #    #write to wellness table
     with table.batch_writer() as batch:
         batch.put_item(final_input_data)
-
-    print("PutItem succeeded:")
+    #print result    
+    result = "PutItem succeeded"
+    tm1.insert(tk.END, result)
+    tm1.after(10000, lambda: tm1.delete(1.0, tk.END))
 
 #add the submit and cancel buttons
 tk.Button(meas_frame, text='Submit Current', command=submit_meas_data_current, pady=4, padx=7, relief='raised',bd=4).grid(row=1, column=0)
 tk.Button(meas_frame, text='Submit Historical', command=submit_meas_data_historical, pady=5, padx=7, relief='raised',bd=4).grid(row=1, column=1)
 hist_meas_input = tk.StringVar(value='2017-05-07 08:00:00')
 tk.Entry(meas_frame, text='what', textvariable=hist_meas_input).grid(row=1, column=2, columnspan=2)
+tm1=tk.Text(meas_frame, height=1, width=20)
+tm1.grid(row=1, column=4,columnspan=2, padx=(1,2),pady=(1,2))
 tk.Button(meas_frame, text='Quit', command=_quit, pady=4, padx=7, relief='sunken').grid(row=1,column=6)
 
+#output
+
+
 #inputs
-ttk.Label(meas_frame, text='Body Temp').grid(row=11, column=0, sticky = 'E')
-temp_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=temp_input).grid(row=11, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Right Grip').grid(row=12, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Right Grip').grid(row=11, column=0, sticky = 'E')
 rtgrip_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=rtgrip_input).grid(row=12, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=rtgrip_input).grid(row=11, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Left Grip').grid(row=13, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Left Grip').grid(row=12, column=0, sticky = 'E')
 ltgrip_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=ltgrip_input).grid(row=13, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=ltgrip_input).grid(row=12, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Weight in lbs').grid(row=14, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Body Temp').grid(row=13, column=0, sticky = 'E')
+temp_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=temp_input).grid(row=13, column=1,sticky = tk.E+tk.W)
+
+ttk.Label(meas_frame, text='Obsessing').grid(row=14, column=0, sticky = 'E')
+obs_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=obs_input).grid(row=14, column=1,sticky = tk.E+tk.W)
+ttk.Label(meas_frame, text='1-none : 3-little : 5-excessive').grid(row=14, column=2, columnspan=3, sticky = 'W')
+
+ttk.Label(meas_frame, text='Depression').grid(row=15, column=0, sticky = 'E')
+dep_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=dep_input).grid(row=15, column=1,sticky = tk.E+tk.W)
+ttk.Label(meas_frame, text='1 good to 5 bad').grid(row=15, column=2, columnspan=3, sticky = 'W')
+
+ttk.Label(meas_frame, text='Anxiety').grid(row=16, column=0, sticky = 'E')
+anx_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=anx_input).grid(row=16, column=1,sticky = tk.E+tk.W)
+ttk.Label(meas_frame, text='1 good to 5 bad').grid(row=16, column=2, columnspan=3, sticky = 'W')
+
+ttk.Label(meas_frame, text='Libido').grid(row=17, column=0, sticky = 'E')
+lib_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=lib_input).grid(row=17, column=1,sticky = tk.E+tk.W)
+ttk.Label(meas_frame, text='1 good to 5 bad').grid(row=17, column=2, columnspan=3, sticky = 'W')
+
+ttk.Label(meas_frame, text='Weight in lbs').grid(row=33, column=0, sticky = 'E')
 weight_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=weight_input).grid(row=14, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=weight_input).grid(row=33, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Fat %').grid(row=15, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Fat %').grid(row=35, column=0, sticky = 'E')
 fat_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=fat_input).grid(row=15, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=fat_input).grid(row=35, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Hydration %').grid(row=16, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Hydration %').grid(row=36, column=0, sticky = 'E')
 hydration_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=hydration_input).grid(row=16, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=hydration_input).grid(row=36, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Waist in Inches').grid(row=17, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Waist in Inches').grid(row=37, column=0, sticky = 'E')
 waist_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=waist_input).grid(row=17, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=waist_input).grid(row=37, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Left Calf in Inches').grid(row=18, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Left Calf in Inches').grid(row=38, column=0, sticky = 'E')
 ltcalf_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=ltcalf_input).grid(row=18, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=ltcalf_input).grid(row=38, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Right Calf in Inches').grid(row=19, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Right Calf in Inches').grid(row=39, column=0, sticky = 'E')
 rtcalf_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=rtcalf_input).grid(row=19, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=rtcalf_input).grid(row=39, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Left Leg in Inches').grid(row=20, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Left Leg in Inches').grid(row=30, column=0, sticky = 'E')
 ltleg_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=ltleg_input).grid(row=20, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=ltleg_input).grid(row=30, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Right Leg in Inches').grid(row=21, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Right Leg in Inches').grid(row=31, column=0, sticky = 'E')
 rtleg_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=rtleg_input).grid(row=21, column=1,sticky = tk.E+tk.W)
+tk.Entry(meas_frame, textvariable=rtleg_input).grid(row=31, column=1,sticky = tk.E+tk.W)
 
 
 
 #################
 # supplements
 #################
-    
+#t1=tk.Text(supp_frame, height=2, width=40).grid(row=2, column=0, columnspan=2)    
 data = {}
 def submit_data_current():
     data['taurine'] = decimal.Decimal(taurine.get())
@@ -226,13 +317,14 @@ def submit_data_current():
     #combine dicts
     final_input_data = data.copy()
     final_input_data.update(required_hash_data)
-    print(final_input_data)
-
     #write to wellness table
     with table.batch_writer() as batch:
         batch.put_item(final_input_data)
+    #print result    
+    result = "PutItem succeeded"
+    t1.insert(tk.END, result)
+    t1.after(10000, lambda: t1.delete(1.0, tk.END))
 
-    print("PutItem succeeded:")
     
 def submit_data_historical():
     data['taurine'] = decimal.Decimal(taurine.get())
@@ -269,14 +361,13 @@ def submit_data_historical():
     #combine dicts
     final_input_data = data.copy()
     final_input_data.update(required_hash_data)
-    print(final_input_data)
-
     #write to wellness table
     with table.batch_writer() as batch:
         batch.put_item(final_input_data)
-
-    print("PutItem succeeded:")
-
+    #print result    
+    result = "PutItem succeeded"
+    t1.insert(tk.END, result)
+    t1.after(10000, lambda: t1.delete(1.0, tk.END))
 # entry width wag
 ENTRY_WIDTH = 20
 
@@ -287,17 +378,9 @@ tk.Button(supp_frame, text='Submit Current', command=submit_data_current, pady=4
 tk.Button(supp_frame, text='Submit Historical', command=submit_data_historical, pady=5, padx=7, relief='raised',bd=4).grid(row=1, column=1)
 hist_input = tk.StringVar(value='2017-05-07 08:00:00')
 tk.Entry(supp_frame, text='what', textvariable=hist_input).grid(row=1, column=2, columnspan=2)
+t1=tk.Text(supp_frame, height=1, width=20)
+t1.grid(row=1, column=4,columnspan=2, padx=(1,2),pady=(1,2))
 tk.Button(supp_frame, text='Quit', command=_quit, pady=4, padx=7, relief='sunken').grid(row=1,column=6)
-
-#BR Nutrition L-Tyrosine
-ttk.Label(supp_frame, text='L-Tyrosine').grid(row=2, column=0, sticky = 'E')
-tyrosine = tk.IntVar()
-tk.Radiobutton(supp_frame, text='None', padx=5, pady=5, bg='tan', variable=tyrosine, value=0).grid(row=2, column=1,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='1 pill', padx=5, pady=5, bg='tan', variable=tyrosine, value=500).grid(row=2, column=2,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=tyrosine, value=1000).grid(row=2, column=3, sticky = tk.E+tk.W)
-tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=2, column=4,sticky = tk.E+tk.W)
-tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=2, column=5,sticky = tk.E+tk.W)
-tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=2, column=6,sticky = tk.E+tk.W)
 
 #vitaminD
 ttk.Label(supp_frame, text='VitaminD (liquid)').grid(row=3, column=0, sticky = 'E')
@@ -399,15 +482,15 @@ tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=creatine, bg='tan', 
 tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=creatine, bg='tan', pady=5, value=3).grid(row=13, column=4,sticky = tk.E+tk.W)
 tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=creatine, bg='tan', pady=5, value=4).grid(row=13, column=5, sticky = tk.E+tk.W)
 tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=creatine, bg='tan', pady=5, value=5).grid(row=13, column=6, sticky = tk.E+tk.W)
-#Source Naturals Niacin
-ttk.Label(supp_frame, text='Niacin').grid(row=14, column=0, sticky = 'E')
-niacin = tk.IntVar()
-tk.Radiobutton(supp_frame, text='None', padx=5, variable=niacin, bg='tan', pady=5, value=0).grid(row=14, column=1,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='1 pill', padx=5, variable=niacin, bg='tan', pady=5, value=1).grid(row=14, column=2,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=niacin, bg='tan', pady=5, value=2).grid(row=14, column=3, sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=niacin, bg='tan', pady=5, value=3).grid(row=14, column=4,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=niacin, bg='tan', pady=5, value=4).grid(row=14, column=5, sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=niacin, bg='tan', pady=5, value=5).grid(row=14, column=6, sticky = tk.E+tk.W)
+#BR Nutrition L-Tyrosine
+ttk.Label(supp_frame, text='L-Tyrosine').grid(row=14, column=0, sticky = 'E')
+tyrosine = tk.IntVar()
+tk.Radiobutton(supp_frame, text='None', padx=5, pady=5, bg='tan', variable=tyrosine, value=0).grid(row=14, column=1,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, pady=5, bg='tan', variable=tyrosine, value=500).grid(row=14, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=tyrosine, value=1000).grid(row=14, column=3, sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=14, column=4,sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=14, column=5,sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=14, column=6,sticky = tk.E+tk.W)
 #Jarrow MSM
 ttk.Label(supp_frame, text='MSM').grid(row=15, column=0, sticky = 'E')
 msm = tk.IntVar()
@@ -436,6 +519,16 @@ tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=hmb, bg='tan', pady=
 tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=hmb, bg='tan', pady=5, value=3).grid(row=17, column=4,sticky = tk.E+tk.W)
 tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=hmb, bg='tan', pady=5, value=4).grid(row=17, column=5,sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=17, column=6,sticky = tk.E+tk.W)
+
+#Source Naturals Niacin
+ttk.Label(supp_frame, text='Niacin').grid(row=18, column=0, sticky = 'E')
+niacin = tk.IntVar()
+tk.Radiobutton(supp_frame, text='None', padx=5, variable=niacin, bg='tan', pady=5, value=0).grid(row=18, column=1,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, variable=niacin, bg='tan', pady=5, value=1).grid(row=18, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=niacin, bg='tan', pady=5, value=2).grid(row=18, column=3, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=niacin, bg='tan', pady=5, value=3).grid(row=18, column=4,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=niacin, bg='tan', pady=5, value=4).grid(row=18, column=5, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=niacin, bg='tan', pady=5, value=5).grid(row=18, column=6, sticky = tk.E+tk.W)
 
 ttk.Label(supp_frame, text='Taurine').grid(row=19, column=0, sticky = 'E')
 taurine = tk.IntVar()
