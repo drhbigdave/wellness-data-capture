@@ -90,31 +90,6 @@ ttk.Label(shake_frame, text='Protein').grid(row=11, column=0, sticky = 'E')
 temp_input = tk.StringVar(value='0.0')
 tk.Entry(shake_frame, textvariable=temp_input).grid(row=11, column=1,sticky = tk.E+tk.W)
 
-#ttk.Label(meas_frame, text='Right Grip').grid(row=12, column=0, sticky = 'E')
-#rtgrip_input = tk.StringVar(value='0.0')
-#tk.Entry(meas_frame, textvariable=rtgrip_input).grid(row=12, column=1,sticky = tk.E+tk.W)
-#
-#ttk.Label(meas_frame, text='Left Grip').grid(row=13, column=0, sticky = 'E')
-#ltgrip_input = tk.StringVar(value='0.0')
-#tk.Entry(meas_frame, textvariable=ltgrip_input).grid(row=13, column=1,sticky = tk.E+tk.W)
-#
-#ttk.Label(meas_frame, text='Weight in lbs').grid(row=14, column=0, sticky = 'E')
-#weight_input = tk.StringVar(value='0.0')
-#tk.Entry(meas_frame, textvariable=weight_input).grid(row=14, column=1,sticky = tk.E+tk.W)
-#
-#ttk.Label(meas_frame, text='Fat %').grid(row=15, column=0, sticky = 'E')
-#fat_input = tk.StringVar(value='0.0')
-#tk.Entry(meas_frame, textvariable=fat_input).grid(row=15, column=1,sticky = tk.E+tk.W)
-#
-#ttk.Label(meas_frame, text='Hydration %').grid(row=16, column=0, sticky = 'E')
-#hydration_input = tk.StringVar(value='0.0')
-#tk.Entry(meas_frame, textvariable=hydration_input).grid(row=16, column=1,sticky = tk.E+tk.W)
-#
-#ttk.Label(meas_frame, text='Waist in Inches').grid(row=17, column=0, sticky = 'E')
-#waist_input = tk.StringVar(value='0.0')
-#tk.Entry(meas_frame, textvariable=waist_input).grid(row=17, column=1,sticky = tk.E+tk.W)
-
-
 
 #################
 # measurements
@@ -301,9 +276,15 @@ def submit_data_current():
     data['fishoil(cla)'] = decimal.Decimal(fishoil.get()*90)
     data['tyrosine'] = decimal.Decimal(tyrosine.get())
     data['aspirin'] = decimal.Decimal(aspirin.get()*81)
-    data['creatine'] = decimal.Decimal(creatine.get()*700)
+    data['creatine'] = decimal.Decimal(creatine.get()*5000)
     data['rez-v'] = decimal.Decimal(rezV.get()*200)
     data['hmb'] = decimal.Decimal(hmb.get()*500)
+    data['tongkat-ali'] = decimal.Decimal(tongkatali.get()*80)
+    data['red-ginseng'] = decimal.Decimal(r_ginseng.get()*300)
+    data['tribulus'] = decimal.Decimal(trib.get()*250)
+    data['eliteprominerals'] = decimal.Decimal(elite_min.get())
+    data['greenTeaECGC'] = decimal.Decimal(green_tea.get()*200)
+    data['greenTeaCatequins'] = decimal.Decimal(green_tea.get()*320)
     for key in list(data.keys()):  ## creates a list of all keys
         if data[key] == 0:
             del data[key]
@@ -343,11 +324,17 @@ def submit_data_historical():
     data['fishoil(cla)'] = decimal.Decimal(fishoil.get()*90)
     data['tyrosine'] = decimal.Decimal(tyrosine.get())
     data['aspirin'] = decimal.Decimal(aspirin.get()*81)
-    data['creatine'] = decimal.Decimal(creatine.get()*700)
+    data['creatine'] = decimal.Decimal(creatine.get()*5000)
     data['niacin'] = decimal.Decimal(niacin.get()*100)
     data['msm'] = decimal.Decimal(msm.get()*100)
     data['rez-v'] = decimal.Decimal(rezV.get()*200)
     data['hmb'] = decimal.Decimal(hmb.get()*500)
+    data['tongkat-ali'] = decimal.Decimal(tongkatali.get()*80)
+    data['red-ginseng'] = decimal.Decimal(r_ginseng.get()*300)
+    data['tribulus'] = decimal.Decimal(trib.get()*250)
+    data['eliteprominerals'] = decimal.Decimal(elite_min.get())
+    data['greenTeaECGC'] = decimal.Decimal(green_tea.get()*200)
+    data['greenTeaCatequins'] = decimal.Decimal(green_tea.get()*320)
     for key in list(data.keys()):  ## creates a list of all keys
         if data[key] == 0:
             del data[key]
@@ -473,15 +460,15 @@ tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=as
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=12, column=4,sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=12, column=5,sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=12, column=6,sticky = tk.E+tk.W)
-#Scott's Finest Purecee
-ttk.Label(supp_frame, text='Creatine ethyl').grid(row=13, column=0, sticky = 'E')
+#Biotest Micronized Creatine
+ttk.Label(supp_frame, text='Creatine').grid(row=13, column=0, sticky = 'E')
 creatine = tk.IntVar()
 tk.Radiobutton(supp_frame, text='None', padx=5, variable=creatine, bg='tan', pady=5, value=0).grid(row=13, column=1,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='1 pill', padx=5, variable=creatine, bg='tan', pady=5, value=1).grid(row=13, column=2,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=creatine, bg='tan', pady=5, value=2).grid(row=13, column=3, sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=creatine, bg='tan', pady=5, value=3).grid(row=13, column=4,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=creatine, bg='tan', pady=5, value=4).grid(row=13, column=5, sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=creatine, bg='tan', pady=5, value=5).grid(row=13, column=6, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 scoops', padx=5, variable=creatine, bg='tan', pady=5, value=1).grid(row=13, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 scoops', padx=5, variable=creatine, bg='tan', pady=5, value=2).grid(row=13, column=3, sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=13, column=4,sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=13, column=5,sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=13, column=6,sticky = tk.E+tk.W)
 #BR Nutrition L-Tyrosine
 ttk.Label(supp_frame, text='L-Tyrosine').grid(row=14, column=0, sticky = 'E')
 tyrosine = tk.IntVar()
@@ -538,6 +525,64 @@ tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=ta
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=19, column=4,sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=19, column=5,sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=19, column=6,sticky = tk.E+tk.W)
+
+ttk.Label(supp_frame, text='tongkatali').grid(row=20, column=0, sticky = 'E')
+tongkatali = tk.IntVar()
+tk.Radiobutton(supp_frame, text='None', padx=5, pady=5, bg='tan', variable=tongkatali, value=0).grid(row=20, column=1,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, pady=5, bg='tan', variable=tongkatali, value=1).grid(row=20, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=tongkatali, value=2).grid(row=20, column=3, sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=20, column=4,sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=20, column=5,sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=20, column=6,sticky = tk.E+tk.W)
+
+#Biotest ElitePro Mineral Support
+ttk.Label(supp_frame, text='ElitePro Minerals').grid(row=25, column=0, sticky = 'E')
+elite_min = tk.IntVar()
+tk.Radiobutton(supp_frame, text='None', padx=5, variable=elite_min, bg='tan', pady=5, value=0).grid(row=25, column=1,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, variable=elite_min, bg='tan', pady=5, value=1).grid(row=25, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=elite_min, bg='tan', pady=5, value=2).grid(row=25, column=3, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=elite_min, bg='tan', pady=5, value=3).grid(row=25, column=4,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=elite_min, bg='tan', pady=5, value=4).grid(row=25, column=5, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=elite_min, bg='tan', pady=5, value=5).grid(row=25, column=6, sticky = tk.E+tk.W)
+
+#Buddha's Herbs Green Tea decaffeinated 
+ttk.Label(supp_frame, text='Green Tea Extract').grid(row=26, column=0, sticky = 'E')
+green_tea = tk.IntVar()
+tk.Radiobutton(supp_frame, text='None', padx=5, variable=green_tea, bg='tan', pady=5, value=0).grid(row=26, column=1,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, variable=green_tea, bg='tan', pady=5, value=1).grid(row=26, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=green_tea, bg='tan', pady=5, value=2).grid(row=26, column=3, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=green_tea, bg='tan', pady=5, value=3).grid(row=26, column=4,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=green_tea, bg='tan', pady=5, value=4).grid(row=26, column=5, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=green_tea, bg='tan', pady=5, value=5).grid(row=26, column=6, sticky = tk.E+tk.W)
+
+# #soloray b-complex 100
+# ttk.Label(supp_frame, text='B-Complex 100-n/a').grid(row=29, column=0, sticky = 'E')
+# b-comp = tk.IntVar()
+# tk.Radiobutton(supp_frame, text='None', padx=5, variable=b-comp, bg='tan', pady=5, value=0).grid(row=29, column=1,sticky = tk.E+tk.W)
+# tk.Radiobutton(supp_frame, text='1 pill', padx=5, variable=b-comp, bg='tan', pady=5, value=1).grid(row=29, column=2,sticky = tk.E+tk.W)
+# tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=b-comp, bg='tan', pady=5, value=2).grid(row=29, column=3, sticky = tk.E+tk.W)
+# tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=b-comp, bg='tan', pady=5, value=3).grid(row=29, column=4,sticky = tk.E+tk.W)
+# tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=b-comp, bg='tan', pady=5, value=4).grid(row=29, column=5, sticky = tk.E+tk.W)
+# tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=b-comp, bg='tan', pady=5, value=5).grid(row=29, column=6, sticky = tk.E+tk.W)
+
+
+ttk.Label(supp_frame, text='Red Ginseng').grid(row=30, column=0, sticky = 'E')
+r_ginseng = tk.IntVar()
+tk.Radiobutton(supp_frame, text='None', padx=5, pady=5, bg='tan', variable=r_ginseng, value=0).grid(row=30, column=1,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, pady=5, bg='tan', variable=r_ginseng, value=1).grid(row=30, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=r_ginseng, value=2).grid(row=30, column=3, sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=30, column=4,sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=30, column=5,sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=30, column=6,sticky = tk.E+tk.W)
+
+ttk.Label(supp_frame, text='Tribulus').grid(row=31, column=0, sticky = 'E')
+trib = tk.IntVar()
+tk.Radiobutton(supp_frame, text='None', padx=5, pady=5, bg='tan', variable=trib, value=0).grid(row=31, column=1,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, pady=5, bg='tan', variable=trib, value=1).grid(row=31, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=trib, value=2).grid(row=31, column=3, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='3 pills', padx=5, pady=5, bg='tan', variable=trib, value=3).grid(row=31, column=4, sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=31, column=5,sticky = tk.E+tk.W)
+tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=31, column=6,sticky = tk.E+tk.W)
 
 
 win.mainloop()
