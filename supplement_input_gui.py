@@ -285,6 +285,7 @@ def submit_data_current():
     data['eliteprominerals'] = decimal.Decimal(elite_min.get())
     data['greenTeaECGC'] = decimal.Decimal(green_tea.get()*200)
     data['greenTeaCatequins'] = decimal.Decimal(green_tea.get()*320)
+    data['forskolin'] = decimal.Decimal(forskolin.get()*20)
     for key in list(data.keys()):  ## creates a list of all keys
         if data[key] == 0:
             del data[key]
@@ -335,6 +336,7 @@ def submit_data_historical():
     data['eliteprominerals'] = decimal.Decimal(elite_min.get())
     data['greenTeaECGC'] = decimal.Decimal(green_tea.get()*200)
     data['greenTeaCatequins'] = decimal.Decimal(green_tea.get()*320)
+    data['forskolin'] = decimal.Decimal(forskolin.get()*20)
     for key in list(data.keys()):  ## creates a list of all keys
         if data[key] == 0:
             del data[key]
@@ -555,15 +557,15 @@ tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=green_tea, bg='tan',
 tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=green_tea, bg='tan', pady=5, value=4).grid(row=26, column=5, sticky = tk.E+tk.W)
 tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=green_tea, bg='tan', pady=5, value=5).grid(row=26, column=6, sticky = tk.E+tk.W)
 
-# #soloray b-complex 100
-# ttk.Label(supp_frame, text='B-Complex 100-n/a').grid(row=29, column=0, sticky = 'E')
-# b-comp = tk.IntVar()
-# tk.Radiobutton(supp_frame, text='None', padx=5, variable=b-comp, bg='tan', pady=5, value=0).grid(row=29, column=1,sticky = tk.E+tk.W)
-# tk.Radiobutton(supp_frame, text='1 pill', padx=5, variable=b-comp, bg='tan', pady=5, value=1).grid(row=29, column=2,sticky = tk.E+tk.W)
-# tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=b-comp, bg='tan', pady=5, value=2).grid(row=29, column=3, sticky = tk.E+tk.W)
-# tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=b-comp, bg='tan', pady=5, value=3).grid(row=29, column=4,sticky = tk.E+tk.W)
-# tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=b-comp, bg='tan', pady=5, value=4).grid(row=29, column=5, sticky = tk.E+tk.W)
-# tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=b-comp, bg='tan', pady=5, value=5).grid(row=29, column=6, sticky = tk.E+tk.W)
+#Biotest Carbolin 19
+ttk.Label(supp_frame, text='Carbolin 19').grid(row=29, column=0, sticky = 'E')
+forskolin = tk.IntVar()
+tk.Radiobutton(supp_frame, text='None', padx=5, variable=forskolin, bg='tan', pady=5, value=0).grid(row=29, column=1,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, variable=forskolin, bg='tan', pady=5, value=1).grid(row=29, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, variable=forskolin, bg='tan', pady=5, value=2).grid(row=29, column=3, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='3 pills', padx=5, variable=forskolin, bg='tan', pady=5, value=3).grid(row=29, column=4,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='4 pills', padx=5, variable=forskolin, bg='tan', pady=5, value=4).grid(row=29, column=5, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='5 pills', padx=5, variable=forskolin, bg='tan', pady=5, value=5).grid(row=29, column=6, sticky = tk.E+tk.W)
 
 
 ttk.Label(supp_frame, text='Red Ginseng').grid(row=30, column=0, sticky = 'E')
