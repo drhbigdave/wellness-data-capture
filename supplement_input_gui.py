@@ -89,13 +89,13 @@ def submit_meas_data_current():
     measurement_capture['readiness'] = decimal.Decimal(readiness_input.get())
     measurement_capture['overall'] = decimal.Decimal(overall_input.get())
     measurement_capture['waist'] = decimal.Decimal(waist_input.get())
-    measurement_capture['left-calf'] = decimal.Decimal(ltcalf_input.get())
-    measurement_capture['right-calf'] = decimal.Decimal(rtcalf_input.get())
-    measurement_capture['left-leg'] = decimal.Decimal(ltleg_input.get())
+    measurement_capture['fasting-duration'] = decimal.Decimal(fast_duration_input.get())
+    measurement_capture['systolic'] = decimal.Decimal(rtcalf_input.get())
+    measurement_capture['diastolic'] = decimal.Decimal(ltleg_input.get())
     measurement_capture['right-leg'] = decimal.Decimal(rtleg_input.get())
     measurement_capture['right-grip'] = decimal.Decimal(rtgrip_input.get())
     measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input.get())
-    measurement_capture['temperature'] = decimal.Decimal(temp_input.get())
+    measurement_capture['blood-glucose'] = decimal.Decimal(blood_glucose_input.get())
     measurement_capture['depression'] = decimal.Decimal(dep_input.get())
     measurement_capture['anxiety'] = decimal.Decimal(anx_input.get())
     measurement_capture['obsessing'] = decimal.Decimal(obs_input.get())
@@ -126,13 +126,13 @@ def submit_meas_data_historical():
     measurement_capture['readiness'] = decimal.Decimal(readiness_input.get())
     measurement_capture['overall'] = decimal.Decimal(overall_input.get())
     measurement_capture['waist'] = decimal.Decimal(waist_input.get())
-    measurement_capture['left-calf'] = decimal.Decimal(ltcalf_input.get())
-    measurement_capture['right-calf'] = decimal.Decimal(rtcalf_input.get())
-    measurement_capture['left-leg'] = decimal.Decimal(ltleg_input.get())
+    measurement_capture['fasting-duration'] = decimal.Decimal(fast_duration_input.get())
+    measurement_capture['systolic'] = decimal.Decimal(rtcalf_input.get())
+    measurement_capture['diastolic'] = decimal.Decimal(ltleg_input.get())
     measurement_capture['right-leg'] = decimal.Decimal(rtleg_input.get())
     measurement_capture['right-grip'] = decimal.Decimal(rtgrip_input.get())
     measurement_capture['left-grip'] = decimal.Decimal(ltgrip_input.get())
-    measurement_capture['temperature'] = decimal.Decimal(temp_input.get())
+    measurement_capture['blood-glucose'] = decimal.Decimal(blood_glucose_input.get())
     measurement_capture['depression'] = decimal.Decimal(dep_input.get())
     measurement_capture['anxiety'] = decimal.Decimal(anx_input.get())
     measurement_capture['obsessing'] = decimal.Decimal(obs_input.get())
@@ -186,9 +186,9 @@ obs_row_var = 15 #obsessing
 dep_row_var = 16 #depression
 rtgrip_row_var = 17
 ltgrip_row_var = 18
-temp_row_var = 19
-waist_row_var = 20
-lft_calf_row_var = 21
+blood_glucose_row_var = 19
+waist_row_var = 21
+fast_dur_row_var = 20
 rt_calf_row_var = 22
 lft_leg_row_var =  23
 rt_leg_row_var = 24
@@ -203,9 +203,9 @@ ttk.Label(meas_frame, text='Left Grip').grid(row=ltgrip_row_var, column=0, stick
 ltgrip_input = tk.StringVar(value='0.0')
 tk.Entry(meas_frame, textvariable=ltgrip_input).grid(row=ltgrip_row_var, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Body Temp').grid(row=temp_row_var, column=0, sticky = 'E')
-temp_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=temp_input).grid(row=temp_row_var, column=1,sticky = tk.E+tk.W)
+ttk.Label(meas_frame, text='Blood Glucose').grid(row=blood_glucose_row_var, column=0, sticky = 'E')
+blood_glucose_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=blood_glucose_input).grid(row=blood_glucose_row_var, column=1,sticky = tk.E+tk.W)
 
 ttk.Label(meas_frame, text='Obsessing').grid(row=obs_row_var, column=0, sticky = 'E')
 obs_input = tk.StringVar(value='0.0')
@@ -246,15 +246,15 @@ ttk.Label(meas_frame, text='Waist in Inches').grid(row=waist_row_var, column=0, 
 waist_input = tk.StringVar(value='0.0')
 tk.Entry(meas_frame, textvariable=waist_input).grid(row=waist_row_var, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Left Calf in Inches').grid(row=lft_calf_row_var, column=0, sticky = 'E')
-ltcalf_input = tk.StringVar(value='0.0')
-tk.Entry(meas_frame, textvariable=ltcalf_input).grid(row=lft_calf_row_var, column=1,sticky = tk.E+tk.W)
+ttk.Label(meas_frame, text='time in mins since last food').grid(row=fast_dur_row_var, column=0, sticky = 'E')
+fast_duration_input = tk.StringVar(value='0.0')
+tk.Entry(meas_frame, textvariable=fast_duration_input).grid(row=fast_dur_row_var, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Right Calf in Inches').grid(row=rt_calf_row_var, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Systolic').grid(row=rt_calf_row_var, column=0, sticky = 'E')
 rtcalf_input = tk.StringVar(value='0.0')
 tk.Entry(meas_frame, textvariable=rtcalf_input).grid(row=rt_calf_row_var, column=1,sticky = tk.E+tk.W)
 
-ttk.Label(meas_frame, text='Left Leg in Inches').grid(row=lft_leg_row_var, column=0, sticky = 'E')
+ttk.Label(meas_frame, text='Diastolic').grid(row=lft_leg_row_var, column=0, sticky = 'E')
 ltleg_input = tk.StringVar(value='0.0')
 tk.Entry(meas_frame, textvariable=ltleg_input).grid(row=lft_leg_row_var, column=1,sticky = tk.E+tk.W)
 
@@ -272,7 +272,7 @@ tk.Entry(meas_frame, textvariable=rtleg_input).grid(row=rt_leg_row_var, column=1
 #
 data = {}
 def submit_data_current():
-    data['vitaminD'] = decimal.Decimal(vitaminD.get()*1000)
+    data['vitaminD'] = decimal.Decimal(vitaminD.get()*400)
     data['vitaminC'] = decimal.Decimal(vitaminC.get()*500)
     data['boron'] = decimal.Decimal(boron.get()*2)
     data['garlic'] = decimal.Decimal(garlic.get()*500)
@@ -315,7 +315,7 @@ def submit_data_current():
 
 
 def submit_data_historical():
-    data['vitaminD'] = decimal.Decimal(vitaminD.get()*1000)
+    data['vitaminD'] = decimal.Decimal(vitaminD.get()*400)
     data['vitaminC'] = decimal.Decimal(vitaminC.get()*500)
     data['boron'] = decimal.Decimal(boron.get()*2)
     data['garlic'] = decimal.Decimal(garlic.get()*500)
@@ -394,11 +394,11 @@ tk.Button(supp_frame, text='Quit', command=_quit, pady=4, padx=7, relief='sunken
 ttk.Label(supp_frame, text='VitaminD 1000mg').grid(row=vitd_row, column=0, sticky = 'E')
 vitaminD = tk.IntVar()
 tk.Radiobutton(supp_frame, text='None', padx=5, variable=vitaminD, bg='tan', pady=5, value=0).grid(row=vitd_row, column=1,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='1k', variable=vitaminD, padx=5,  bg='tan', pady=5, value=400).grid(row=vitd_row, column=2,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='2k', padx=5, variable=vitaminD, bg='tan', pady=5, value=800).grid(row=vitd_row, column=3, sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='3k', padx=5, variable=vitaminD, bg='tan', pady=5, value=1200).grid(row=vitd_row, column=4,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='4k', padx=5, variable=vitaminD, bg='tan', pady=5, value=1600).grid(row=vitd_row, column=5, sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='5k', padx=5, variable=vitaminD, bg='tan', pady=5, value=2000).grid(row=vitd_row, column=6, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1k', variable=vitaminD, padx=5,  bg='tan', pady=5, value=1).grid(row=vitd_row, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2k', padx=5, variable=vitaminD, bg='tan', pady=5, value=2).grid(row=vitd_row, column=3, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='3k', padx=5, variable=vitaminD, bg='tan', pady=5, value=3).grid(row=vitd_row, column=4,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='4k', padx=5, variable=vitaminD, bg='tan', pady=5, value=4).grid(row=vitd_row, column=5, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='5k', padx=5, variable=vitaminD, bg='tan', pady=5, value=5).grid(row=vitd_row, column=6, sticky = tk.E+tk.W)
 
 # vitamin k2
 ttk.Label(supp_frame, text='VitaminK2 5mg').grid(row=vitk2_row, column=0, sticky = 'E')
@@ -413,8 +413,8 @@ tk.Radiobutton(supp_frame, text='25mg', padx=5, variable=k2, bg='tan', pady=5, v
 ttk.Label(supp_frame, text='2mg Boron').grid(row=boron_row, column=0, sticky = 'E')
 boron = tk.IntVar()
 tk.Radiobutton(supp_frame, text='None', padx=5, pady=5, bg='tan', variable=boron, value=0).grid(row=boron_row, column=1,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='1 pill', padx=5, pady=5, bg='tan', variable=boron, value=2).grid(row=boron_row, column=2,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=boron, value=4).grid(row=boron_row, column=3, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, pady=5, bg='tan', variable=boron, value=1).grid(row=boron_row, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=boron, value=2).grid(row=boron_row, column=3, sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=boron_row, column=4,sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=boron_row, column=5,sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=boron_row, column=6,sticky = tk.E+tk.W)
@@ -432,8 +432,8 @@ tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=garlic_row, colu
 ttk.Label(supp_frame, text='Pantothenic Acid B5').grid(row=vitb5_row, column=0, sticky = 'E')
 pant_acid = tk.IntVar()
 tk.Radiobutton(supp_frame, text='None', padx=5, pady=5, bg='tan', variable=pant_acid, value=0).grid(row=vitb5_row, column=1,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='1 pill', padx=5, pady=5, bg='tan', variable=pant_acid, value=500).grid(row=vitb5_row, column=2,sticky = tk.E+tk.W)
-tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=pant_acid, value=1000).grid(row=vitb5_row, column=3, sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='1 pill', padx=5, pady=5, bg='tan', variable=pant_acid, value=1).grid(row=vitb5_row, column=2,sticky = tk.E+tk.W)
+tk.Radiobutton(supp_frame, text='2 pills', padx=5, pady=5, bg='tan', variable=pant_acid, value=2).grid(row=vitb5_row, column=3, sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=vitb5_row, column=4,sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=vitb5_row, column=5,sticky = tk.E+tk.W)
 tk.Label(supp_frame, background='tan', padx=5, pady=5).grid(row=vitb5_row, column=6,sticky = tk.E+tk.W)
@@ -1184,7 +1184,7 @@ win.mainloop()
 #def submit_data_historical():
 #    data['taurine'] = decimal.Decimal(taurine.get())
 #    data['liver'] = decimal.Decimal(liver.get())
-#    data['boron'] = decimal.Decimal(boron.get())
+n#    data['boron'] = decimal.Decimal(boron.get())
 #    data['pqq'] = decimal.Decimal(qh_pqq.get()*10)
 #    data['ubiquinol'] = decimal.Decimal(qh_pqq.get()*100)
 #    data['garlic'] = decimal.Decimal(garlic.get()*500)
